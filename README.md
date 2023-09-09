@@ -43,3 +43,6 @@ Follow these steps to deploy the EC2 instance using the CloudFormation template:
    ```bash
    aws cloudformation delete-stack --stack-name your-stack-name
 
+## Customization
+
+You can customize the CloudFormation template by modifying the ec2-template.yaml file to meet your specific requirements. Make sure to review and adjust the security group rules and instance properties as needed.
