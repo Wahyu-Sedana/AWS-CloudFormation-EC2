@@ -1,0 +1,42 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Template untuk membuat EC2 Instance dengan Security Group yang sesuai
+
+Resources:
+  MyEC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t3.medium
+      SecurityGroups:
+        - !Ref MySecurityGroup
+      KeyName: YourKeyName  # Ganti dengan nama kunci SSH Anda
+      ImageId: ami-xxxxxxxxxxxxxxxxx  # Ganti dengan ID AMI yang sesuai
+
+  MySecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow HTTP, HTTPS, SSH, and RDS inbound traffic
+      SecurityGroupIngress:
+        - CidrIp: 0.0.0.0/0  # Allow all IPv4 traffic
+          IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+        - CidrIp: 0.0.0.0/0  # Allow all IPv4 traffic
+          IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+        - CidrIp: 0.0.0.0/0  # Allow all IPv4 traffic
+          IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+        - CidrIp: 0.0.0.0/0  # Allow all IPv4 traffic
+          IpProtocol: tcp
+          FromPort: 3306  # Ganti dengan port RDS MySQL Aurora jika berbeda
+          ToPort: 3306
+
+Outputs:
+  InstanceId:
+    Description: Instance ID of the newly created EC2 instance
+    Value: !Ref MyEC2Instance
+  PublicIp:
+    Description: Public IP address of the EC2 instance
+    Value: !GetAtt MyEC2Instance.PublicIp
